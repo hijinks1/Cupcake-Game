@@ -7,13 +7,22 @@ using UnityEngine.UI;
 public class EggCracker : MonoBehaviour
 {
     public GameObject egg;
-    public GameObject eggCrack1;
-    public GameObject eggCrack2;
     public Animator eggAnimator;
+    public int eggCracks = 0;
+    public int neededCracks = 2;
 
     public void Start()
     { 
         eggAnimator = egg.GetComponent<Animator>();
+    }
+
+    public void Update()
+    {
+        if (eggCracks >= neededCracks)
+        {
+            //Debug.Log("Next minigame");
+            StopCoroutine(CrackEgg());
+        }
     }
 
     public void PlayEggCrack()
@@ -24,6 +33,8 @@ public class EggCracker : MonoBehaviour
     public IEnumerator CrackEgg()
     {
         eggAnimator.Play("Crack");
+        eggCracks++;
+        Debug.Log(eggCracks);
         yield return new WaitForSeconds(1f);
     }
 }

@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class NextButton : MonoBehaviour
 {
     public GameObject[] buttons;
     public int currentIndex = 0;
     public Button nextButton;
+    public TextMeshProUGUI buttonText;
 
     public bool[] buttonClicked;
     void Start()
@@ -15,6 +17,7 @@ public class NextButton : MonoBehaviour
         UpdateObjectVisibility();
         UpdateButtonState();
         buttonClicked = new bool[buttons.Length];
+        buttonText.text = "Next";
     }
 
     public void OnButtonClicked(int index)
@@ -24,6 +27,13 @@ public class NextButton : MonoBehaviour
             buttons[index].SetActive(true);
             buttonClicked[index] = true;
             UpdateButtonState();   
+        }
+        
+        //if currentIndex is 3, change Next text into Done
+        if (index == 3)
+        {
+            buttonText.text = "Done";
+            // Do confetti and stop timer!
         }
     }
     
@@ -38,7 +48,6 @@ public class NextButton : MonoBehaviour
             {
                 UpdateObjectVisibility();
             }
-
             UpdateButtonState();
         }
     }
