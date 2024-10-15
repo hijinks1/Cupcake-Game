@@ -7,19 +7,25 @@ public class FlourPourer : MonoBehaviour
 {
     public GameObject flour;
     public Animator flourAnimator;
-    public int flourPours;
+    public int flourPours = 0;
     public int neededPours = 2;
+    
+    public BakingUI bakingUI;
+    public bool movedToNext = false;
     
     public void Start()
     { 
         flourAnimator = flour.GetComponent<Animator>();
+        bakingUI = FindObjectOfType<BakingUI>();
     }
 
     public void Update()
     {
-        if (flourPours >= neededPours)
+        if (flourPours >= neededPours && !movedToNext)
         {
-            //Debug.Log("Next minigame");
+            movedToNext = true;
+            Debug.Log("Move onto egg minigame");
+            bakingUI.FinishMinigame(); //Next minigame
             StopCoroutine(PourFlour());
         }
     }

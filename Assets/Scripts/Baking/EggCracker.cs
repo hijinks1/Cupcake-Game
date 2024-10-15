@@ -10,17 +10,23 @@ public class EggCracker : MonoBehaviour
     public Animator eggAnimator;
     public int eggCracks = 0;
     public int neededCracks = 2;
-
+    
+    public BakingUI bakingUI;
+    public bool movedToNext = false;
+    
     public void Start()
     { 
         eggAnimator = egg.GetComponent<Animator>();
+        bakingUI = FindObjectOfType<BakingUI>();
     }
 
     public void Update()
     {
-        if (eggCracks >= neededCracks)
+        if (eggCracks >= neededCracks && !movedToNext)
         {
-            //Debug.Log("Next minigame");
+            movedToNext = true;
+            Debug.Log("move to mixer minigame");
+            bakingUI.FinishMinigame(); //Next minigame
             StopCoroutine(CrackEgg());
         }
     }

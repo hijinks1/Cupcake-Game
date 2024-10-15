@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class NextButton : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class NextButton : MonoBehaviour
     public int currentIndex = 0;
     public Button nextButton;
     public TextMeshProUGUI buttonText;
+
+    public Timer timer;
 
     public bool[] buttonClicked;
     void Start()
@@ -39,8 +42,12 @@ public class NextButton : MonoBehaviour
     
     public void OnNextButtonClicked()
     {
-        if (currentIndex < buttonClicked.Length && buttonClicked[currentIndex] && currentIndex < 3)
+        if (currentIndex < buttonClicked.Length && buttonClicked[currentIndex]) //&& currentIndex < 3)
         {
+            if (currentIndex == 3)
+            {
+                PauseTimer(); 
+            }
             buttons[currentIndex].SetActive(false);
             currentIndex++;
 
@@ -59,7 +66,15 @@ public class NextButton : MonoBehaviour
 
     public void UpdateButtonState()
     {
-        nextButton.interactable = currentIndex < buttonClicked.Length && buttonClicked[currentIndex] && currentIndex < 3;
+        nextButton.interactable = currentIndex < buttonClicked.Length && buttonClicked[currentIndex];// && currentIndex < 3;
     }
     
+    private void PauseTimer()
+    {
+        Timer timer = FindObjectOfType<Timer>();
+        if (timer != null)
+        {
+            timer.Pause(); // Call the Pause method on the Timer instance
+        }
+    }
 }
